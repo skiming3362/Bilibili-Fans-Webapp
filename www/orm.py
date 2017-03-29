@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 01:06:56
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-03-30 02:46:45
+# @Last Modified time: 2017-03-30 05:04:31
 import asyncio, logging, aiomysql
 
 def log(sql, args=()):
@@ -83,10 +83,25 @@ class BooleanField(Field):
     def __init__(self, name=None, default=False):
         super().__init__(name, 'boolean', False, default)
 
-class IntegerField(Field):
+class BigIntegerField(Field):
 
     def __init__(self, name=None, primary_key=False, default=0):
         super().__init__(name, 'bigint', primary_key, default)
+
+class IntegerField(Field):
+
+    def __init__(self, name=None, primary_key=False, default=0):
+        super().__init__(name, 'int', primary_key, default)
+
+class SmallIntegerField(Field):
+
+    def __init__(self, name=None, primary_key=False, default=0):
+        super().__init__(name, 'smallint', primary_key, default)
+
+class TinyIntegerField(Field):
+
+    def __init__(self, name=None, primary_key=False, default=0):
+        super().__init__(name, 'tinyint', primary_key, default)
 
 class FloatField(Field):
 
