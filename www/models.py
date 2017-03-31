@@ -2,20 +2,19 @@
 # @Author: skiming
 # @Date:   2017-03-30 05:00:59
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-03-30 05:48:11
+# @Last Modified time: 2017-04-01 06:22:41
 from orm import Model, StringField, IntegerField, BigIntegerField, SmallIntegerField, TinyIntegerField
 
 class User_info(Model):
 	__table__ = 'user_info'
 
-	id = IntegerField(primary_key=True)
+	id = IntegerField()
 	mid = IntegerField(primary_key=True)
 	name = StringField(ddl='varchar(50)')
 	regtime = BigIntegerField()
 	sex = StringField(ddl='varchar(50)')
 	place = StringField(ddl='varchar(50)')
 	level = TinyIntegerField()
-	birthday = StringField(ddl='varchar(50)')
 	approve = TinyIntegerField()
 	attention_num = IntegerField()
 	sign = StringField(ddl='varchar(500)')
