@@ -2,8 +2,8 @@
 # @Author: skiming
 # @Date:   2017-03-30 05:00:59
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-01 06:22:41
-from orm import Model, StringField, IntegerField, BigIntegerField, SmallIntegerField, TinyIntegerField
+# @Last Modified time: 2017-04-03 08:30:27
+from orm import Model, StringField, IntegerField, BigIntegerField, SmallIntegerField, TinyIntegerField, BooleanField
 
 class User_info(Model):
 	__table__ = 'user_info'
@@ -31,3 +31,6 @@ class User_relation(Model):
 	user_id = IntegerField()
 	follower_id = IntegerField()
 	relation_type = TinyIntegerField()
+	addtime = BigIntegerField()
+	charge = BooleanField()
+	attentioned = TinyIntegerField()
