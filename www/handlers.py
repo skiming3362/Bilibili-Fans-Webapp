@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 13:52:26
+# @Last Modified time: 2017-04-03 20:53:22
 
 import re, time, json, logging, hashlib, base64, asyncio
 
@@ -16,7 +16,6 @@ from config import configs
 
 @get('/')
 async def index(request):
-    user_info = await User_info.findAll(where='fans_num>0')
     return {
         '__template__': 'index.html',
         # 'users': user_info
@@ -35,3 +34,16 @@ async def api_create_userrelation(*, user_id, follower_id, addtime, charge, atte
 	await user_relation_1.save()
 	await user_relation_2.save()
 	return user_relation_1
+
+@get('/api/LevelInfo')
+async def api_get_levelinfo(*, mid):
+	fans = []
+	fan_sum = await User_info.findNumber('count(name)',where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_1 = await User_info.findNumber('count(name)',where='level>0 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_2 = await User_info.findNumber('count(name)',where='level>1 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_3 = await User_info.findNumber('count(name)',where='level>2 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_4 = await User_info.findNumber('count(name)',where='level>3 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_5 = await User_info.findNumber('count(name)',where='level>4 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fan_6 = await User_info.findNumber('count(name)',where='level>5 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	data = [fan_sum-fan_1,fan_1-fan_2,fan_2-fan_3,fan_3-fan_4,fan_4-fan_5,fan_5-fan_6,fan_6]
+	return dict(categories=['0级','1级','2级','3级','4级','5级','6级'],data=data)

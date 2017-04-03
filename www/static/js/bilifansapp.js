@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-03 15:57:10
+* @Last Modified time: 2017-04-03 20:58:43
 */
 
 'use strict';
@@ -18,17 +18,31 @@ var level_option = {
 		data: ['人数']
 	},
 	xAxis: {
-		data: ["1级","2级","3级","4级","5级","6级"]
+		data: []
 	},
 	yAxis: {},
 	series: [{
 		name: '人数',
 		type: 'bar',
-		data: [5,22,333,234,13,1]
+		data: []
 	}]
 };
 
 level.setOption(level_option);
+level.showLoading();
+$.get('api/LevelInfo',{mid: '116568'}).done(function(data){
+	level.hideLoading();
+	level.setOption({
+		xAxis: {
+			data: data.categories
+		},
+		series: [{
+			name: '人数',
+			type: 'bar',
+			data: data.data
+		}]
+	});
+})
 
 var sex = echarts.init(document.getElementById('sex'));
 

@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 01:06:56
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-03-30 05:04:31
+# @Last Modified time: 2017-04-03 20:13:41
 import asyncio, logging, aiomysql
 
 def log(sql, args=()):
@@ -222,6 +222,7 @@ class Model(dict, metaclass=ModelMetaclass):
         if len(rs) == 0:
             return None
         return cls(**rs[0])
+
 
     async def save(self):
         args = list(map(self.getValueOrDefault, self.__fields__))

@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-28 23:12:04
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-01 02:54:33
+# @Last Modified time: 2017-04-03 16:23:15
 #           webapp 骨架
 import logging; logging.basicConfig(level=logging.INFO)
 
@@ -45,6 +45,18 @@ async def logger_factory(app, handler):
         # await asyncio.sleep(0.3)
         return (await handler(request))
     return logger
+
+async def data_factory(app, handler):
+    async def parse_data(request):
+        if request.method == 'POST':
+            if request.content_type.startswith('application/json'):
+                request.__data__ = await request.json()
+                logging.info('request json: %s' % str(request.__data__))
+            elif request.content_type.startswith('application/x-www-form-urlencoded'):
+                request.__data__ = await request.post()
+                logging.info('request form: %s' % str(request.__data__))
+        return (await handler(request))
+    return parse_data
 
 async def response_factory(app, handler):
     async def response(request):
@@ -91,7 +103,7 @@ async def response_factory(app, handler):
 
 async def init(loop):
     await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='root', password='root', db='bilibilifans')
-    app = web.Application(loop=loop, middlewares=[logger_factory,response_factory])
+    app = web.Application(loop=loop, middlewares=[logger_factory,data_factory,response_factory])
     init_jinja2(app)
     add_routes(app, 'handlers')
     add_static(app)
