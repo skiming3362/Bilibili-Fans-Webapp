@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 08:24:09
+# @Last Modified time: 2017-04-03 13:52:26
 
 import re, time, json, logging, hashlib, base64, asyncio
 
@@ -18,8 +18,8 @@ from config import configs
 async def index(request):
     user_info = await User_info.findAll(where='fans_num>0')
     return {
-        '__template__': 'test.html',
-        'users': user_info
+        '__template__': 'index.html',
+        # 'users': user_info
     }
 
 @post('/api/UserInfo')

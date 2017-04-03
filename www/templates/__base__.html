@@ -4,16 +4,19 @@
 	<meta charset="UTF-8">
 	{% block meta %}<!-- block meta -->{% endblock %}
 	<title>{% block title %}?{% endblock %} - Awesome Python Webapp</title>
-    <link rel="stylesheet" href="/static/css/awesome.css" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/vue.min.js"></script>
-    <script src="/static/js/awesome.js"></script>
+    <script src="/static/js/echarts.js"></script>
+    <script src="/static/js/china.js"></script>
 	{% block beforehead %}<!-- before head  -->{% endblock %}
 </head>
 <body>
-
-    <div class="">
-        <div class="">
+    <div class="row" style="background-color:#eee; border-top:1px solid #ccc;">
+        <div class="col-md-10"><p class="text-right">登录</p></div>
+    </div>
+    <div class="container">
+        <div class="row">
             <!-- content -->
             {% block content %}
             {% endblock %}
@@ -21,7 +24,7 @@
         </div>
     </div>
 
-    <div class="" style="background-color:#eee; border-top:1px solid #ccc;">
+    <div class="row" style="background-color:#eee; border-top:1px solid #ccc;">
         <div class="">
             <div class="">
                 <p>
@@ -30,9 +33,10 @@
                     <a target="_blank" href="#" class=""></a>
                     <a target="_blank" href="#" class=""></a>
                 </p>
-                <p>Powered by <a href="#">BilibiliFans Python Webapp</a>. Copyright &copy; 2017. </p>
+                <p class="text-center">Powered by <a href="#">BilibiliFans Python Webapp</a>. Copyright &copy; 2017. </p>
             </div>
         </div>
     </div>
+    {% block endbody %}{% endblock %}
 </body>
 </html>
