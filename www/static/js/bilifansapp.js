@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-03 20:58:43
+* @Last Modified time: 2017-04-03 22:31:02
 */
 
 'use strict';
@@ -59,11 +59,7 @@ var sex_option = {
 		name: '比例',
 		type: 'pie',
 		radius : '55%',
-		data: [
-			{value:790, name:'男'},
-			{value:195, name:'女'},
-			{value:1300, name:'保密'}
-		],
+		data: [],
 		itemStyle: {
 			emphasis: {
 				shadowBlur: 10,
@@ -75,6 +71,19 @@ var sex_option = {
 }
 
 sex.setOption(sex_option);
+sex.showLoading();
+$.get('api/SexInfo',{mid: '116568'}).done(function(data){
+	sex.hideLoading();
+	sex.setOption({
+		series: [{
+			data: [
+				{value: data.boy, name:'男'},
+				{value: data.girl, name:'女'},
+				{value: data.unknown, name:'保密'}
+			]
+		}]
+	});
+})
 
 var place = echarts.init(document.getElementById('place'));
 
@@ -88,9 +97,9 @@ var place_option = {
 	},
 	visualMap: {
 		min: 0,
-		max: 100,
+		max: 50,
 		left: 'left',
-		top: 'bottom',
+		top: '50%',
 		text: ['多','少'],
 		calculable: true
 	},
@@ -108,46 +117,55 @@ var place_option = {
 				show: true
 			}
 		},
-		data: [
-			{name: '北京',value: Math.round(Math.random()*100)},
-	        {name: '天津',value: Math.round(Math.random()*100)},
-	        {name: '上海',value: Math.round(Math.random()*100)},
-	        {name: '重庆',value: Math.round(Math.random()*100)},
-	        {name: '河北',value: Math.round(Math.random()*100)},
-	        {name: '河南',value: Math.round(Math.random()*100)},
-	        {name: '云南',value: Math.round(Math.random()*100)},
-	        {name: '辽宁',value: Math.round(Math.random()*100)},
-	        {name: '黑龙江',value: Math.round(Math.random()*100)},
-	        {name: '湖南',value: Math.round(Math.random()*100)},
-	        {name: '安徽',value: Math.round(Math.random()*100)},
-	        {name: '山东',value: Math.round(Math.random()*100)},
-	        {name: '新疆',value: Math.round(Math.random()*100)},
-	        {name: '江苏',value: Math.round(Math.random()*100)},
-	        {name: '浙江',value: Math.round(Math.random()*100)},
-	        {name: '江西',value: Math.round(Math.random()*100)},
-	        {name: '湖北',value: Math.round(Math.random()*100)},
-	        {name: '广西',value: Math.round(Math.random()*100)},
-	        {name: '甘肃',value: Math.round(Math.random()*100)},
-	        {name: '山西',value: Math.round(Math.random()*100)},
-	        {name: '内蒙古',value: Math.round(Math.random()*100)},
-	        {name: '陕西',value: Math.round(Math.random()*100)},
-	        {name: '吉林',value: Math.round(Math.random()*100)},
-	        {name: '福建',value: Math.round(Math.random()*100)},
-	        {name: '贵州',value: Math.round(Math.random()*100)},
-	        {name: '广东',value: Math.round(Math.random()*100)},
-	        {name: '青海',value: Math.round(Math.random()*100)},
-	        {name: '西藏',value: Math.round(Math.random()*100)},
-	        {name: '四川',value: Math.round(Math.random()*100)},
-	        {name: '宁夏',value: Math.round(Math.random()*100)},
-	        {name: '海南',value: Math.round(Math.random()*100)},
-	        {name: '台湾',value: Math.round(Math.random()*100)},
-	        {name: '香港',value: Math.round(Math.random()*100)},
-	        {name: '澳门',value: Math.round(Math.random()*100)}
-		]
+		data: []
 	}
 };
 
 place.setOption(place_option);
+place.showLoading();
+$.get('/api/PlaceInfo',{mid: '116568'}).done(function(data){
+	place.hideLoading();
+	place.setOption({
+		series: {
+			data: [
+				{name: '北京',value: data.list[0]},
+		        {name: '天津',value: data.list[1]},
+		        {name: '上海',value: data.list[2]},
+		        {name: '重庆',value: data.list[3]},
+		        {name: '河北',value: data.list[4]},
+		        {name: '河南',value: data.list[5]},
+		        {name: '云南',value: data.list[6]},
+		        {name: '辽宁',value: data.list[7]},
+		        {name: '黑龙江',value: data.list[8]},
+		        {name: '湖南',value: data.list[9]},
+		        {name: '安徽',value: data.list[10]},
+		        {name: '山东',value: data.list[11]},
+		        {name: '新疆',value: data.list[12]},
+		        {name: '江苏',value: data.list[13]},
+		        {name: '浙江',value: data.list[14]},
+		        {name: '江西',value: data.list[15]},
+		        {name: '湖北',value: data.list[16]},
+		        {name: '广西',value: data.list[17]},
+		        {name: '甘肃',value: data.list[18]},
+		        {name: '山西',value: data.list[19]},
+		        {name: '内蒙古',value: data.list[20]},
+		        {name: '陕西',value: data.list[21]},
+		        {name: '吉林',value: data.list[22]},
+		        {name: '福建',value: data.list[23]},
+		        {name: '贵州',value: data.list[24]},
+		        {name: '广东',value: data.list[25]},
+		        {name: '青海',value: data.list[26]},
+		        {name: '西藏',value: data.list[27]},
+		        {name: '四川',value: data.list[28]},
+		        {name: '宁夏',value: data.list[29]},
+		        {name: '海南',value: data.list[30]},
+		        {name: '台湾',value: data.list[31]},
+		        {name: '香港',value: data.list[32]},
+		        {name: '澳门',value: data.list[33]}
+			]
+		}
+	});
+});
 
 var regtime = echarts.init(document.getElementById('regtime'));
 
@@ -196,6 +214,20 @@ var regtime_option = {
 };
 
 regtime.setOption(regtime_option);
+regtime.showLoading();
+$.get('/api/RegtimeInfo',{mid: '116568'}).done(function(data){
+	regtime.hideLoading();
+	regtime.setOption({
+		series: [
+			{
+				data: []
+			},
+			{
+
+			}
+		]
+	});
+})
 
 var fans_num = echarts.init(document.getElementById('fans_num'));
 

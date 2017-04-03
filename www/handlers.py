@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 20:53:22
+# @Last Modified time: 2017-04-03 22:11:15
 
 import re, time, json, logging, hashlib, base64, asyncio
 
@@ -37,7 +37,6 @@ async def api_create_userrelation(*, user_id, follower_id, addtime, charge, atte
 
 @get('/api/LevelInfo')
 async def api_get_levelinfo(*, mid):
-	fans = []
 	fan_sum = await User_info.findNumber('count(name)',where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
 	fan_1 = await User_info.findNumber('count(name)',where='level>0 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
 	fan_2 = await User_info.findNumber('count(name)',where='level>1 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
@@ -47,3 +46,48 @@ async def api_get_levelinfo(*, mid):
 	fan_6 = await User_info.findNumber('count(name)',where='level>5 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
 	data = [fan_sum-fan_1,fan_1-fan_2,fan_2-fan_3,fan_3-fan_4,fan_4-fan_5,fan_5-fan_6,fan_6]
 	return dict(categories=['0级','1级','2级','3级','4级','5级','6级'],data=data)
+
+@get('/api/SexInfo')
+async def api_get_sexinfo(*, mid):
+	fan_sum = await User_info.findNumber('count(name)',where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	girl = await User_info.findNumber('count(name)',where='sex="女" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	boy = await User_info.findNumber('count(name)',where='sex="男" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	return dict(boy=boy,girl=girl,unknown=fan_sum-boy-girl)
+
+@get('/api/PlaceInfo')
+async def api_get_placeinfo(*, mid):
+	bj = await User_info.findNumber('count(name)',where='place like "%%北京%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	tj = await User_info.findNumber('count(name)',where='place like "%%天津%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	sh = await User_info.findNumber('count(name)',where='place like "%%上海%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	cq = await User_info.findNumber('count(name)',where='place like "%%重庆%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hb = await User_info.findNumber('count(name)',where='place like "%%河北%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hen = await User_info.findNumber('count(name)',where='place like "%%河南%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	yn = await User_info.findNumber('count(name)',where='place like "%%云南%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	ln = await User_info.findNumber('count(name)',where='place like "%%辽宁%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hlj = await User_info.findNumber('count(name)',where='place like "%%黑龙江%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hn = await User_info.findNumber('count(name)',where='place like "%%湖南%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	ah = await User_info.findNumber('count(name)',where='place like "%%安徽%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	sd = await User_info.findNumber('count(name)',where='place like "%%山东%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	xj = await User_info.findNumber('count(name)',where='place like "%%新疆%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	js = await User_info.findNumber('count(name)',where='place like "%%江苏%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	zj = await User_info.findNumber('count(name)',where='place like "%%浙江%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	jx = await User_info.findNumber('count(name)',where='place like "%%江西%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hub = await User_info.findNumber('count(name)',where='place like "%%湖北%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	gx = await User_info.findNumber('count(name)',where='place like "%%广西%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	gs = await User_info.findNumber('count(name)',where='place like "%%甘肃%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	sx = await User_info.findNumber('count(name)',where='place like "%%山西%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	nmg = await User_info.findNumber('count(name)',where='place like "%%内蒙古%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	shx = await User_info.findNumber('count(name)',where='place like "%%陕西%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	jl = await User_info.findNumber('count(name)',where='place like "%%吉林%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	fj = await User_info.findNumber('count(name)',where='place like "%%福建%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	gz = await User_info.findNumber('count(name)',where='place like "%%贵州%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	gd = await User_info.findNumber('count(name)',where='place like "%%广东%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	qh = await User_info.findNumber('count(name)',where='place like "%%青海%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	xz = await User_info.findNumber('count(name)',where='place like "%%西藏%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	sc = await User_info.findNumber('count(name)',where='place like "%%四川%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	nx = await User_info.findNumber('count(name)',where='place like "%%宁夏%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	hain = await User_info.findNumber('count(name)',where='place like "%%海南%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	tw = await User_info.findNumber('count(name)',where='place like "%%台湾%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	xg = await User_info.findNumber('count(name)',where='place like "%%香港%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	am = await User_info.findNumber('count(name)',where='place like "%%澳门%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
+	return dict(list=[bj,tj,sh,cq,hb,hen,yn,ln,hlj,hn,ah,sd,xj,js,zj,jx,hub,gx,gs,sx,nmg,shx,jl,fj,gz,gd,qh,xz,sc,nx,hain,tw,xg,am])
