@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-03 22:31:02
+* @Last Modified time: 2017-04-04 10:14:38
 */
 
 'use strict';
@@ -185,30 +185,39 @@ var regtime_option = {
 			show: false
 		}
 	},
-	toolbox: {},
+	dataZoom: [
+		{
+			type: 'slider',
+			start: 80,
+			end: 90
+		},
+		{
+			type: 'inside',
+			start: 80,
+			end: 90
+		}
+	],
+	toolbox: {
+		feature: {
+			dataZoom: {
+				yAxisIndex: 'none'
+			},
+			magicType: {type: ['stack', 'tiled']}
+		}
+	},
 	legend: {
-		data: ['注册时间','关注时间']
+		data: ['注册','关注']
 	},
 	series: [
 		{
-			name: '注册时间',
-			type: 'line',
-			data: [
-				[1389503456123, 20],
-				[1399485631234, 13],
-				[1420394756321, 40],
-				[1434785766234,125]
-			]
+			name: '注册',
+			type: 'bar',
+			data: []
 		},
 		{
-			name: '关注时间',
-			type: 'line',
-			data: [
-				[1399503456123, 10],
-				[1419485631234, 43],
-				[1432394756321, 50],
-				[1444785766234,125]
-			]
+			name: '关注',
+			type: 'bar',
+			data: []
 		}
 	]
 };
@@ -220,10 +229,10 @@ $.get('/api/RegtimeInfo',{mid: '116568'}).done(function(data){
 	regtime.setOption({
 		series: [
 			{
-				data: []
+				data: data.regdata
 			},
 			{
-
+				data: data.adddata
 			}
 		]
 	});

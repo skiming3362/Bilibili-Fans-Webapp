@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 01:06:56
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 20:13:41
+# @Last Modified time: 2017-04-04 08:40:53
 import asyncio, logging, aiomysql
 
 def log(sql, args=()):
@@ -210,11 +210,12 @@ class Model(dict, metaclass=ModelMetaclass):
         if where:
             sql.append('where')
             sql.append(where)
-        rs = await select(' '.join(sql), args, 1)
+        rs = await select(' '.join(sql), args)
         if len(rs) == 0:
             return None
-        return rs[0]['_num_']
-
+        elif len(rs) == 1:
+            return rs[0]['_num_']
+        return rs
     @classmethod
     async def find(cls, pk):
         ' find object by primary key. '

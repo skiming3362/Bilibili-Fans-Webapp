@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 22:11:15
+# @Last Modified time: 2017-04-04 09:52:08
 
 import re, time, json, logging, hashlib, base64, asyncio
 
@@ -91,3 +91,47 @@ async def api_get_placeinfo(*, mid):
 	xg = await User_info.findNumber('count(name)',where='place like "%%香港%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
 	am = await User_info.findNumber('count(name)',where='place like "%%澳门%%" and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=mid)
 	return dict(list=[bj,tj,sh,cq,hb,hen,yn,ln,hlj,hn,ah,sd,xj,js,zj,jx,hub,gx,gs,sx,nmg,shx,jl,fj,gz,gd,qh,xz,sc,nx,hain,tw,xg,am])
+
+@get('/api/RegtimeInfo')
+async def api_get_regtimeinfo(*, mid):
+	regtime = await User_info.findNumber('from_unixtime(regtime,"%%Y-%%m-%%d")',where='regtime!=0 and mid in (select follower_id from User_relation where user_id=%s and relation_type=1)',args=mid)
+	addtime = await User_relation.findNumber('from_unixtime(addtime,"%%Y-%%m-%%d")',where='user_id=%s and relation_type=1',args=mid)
+	regdata = {0:0}
+	adddata = {0:0}
+	l = []
+
+	def f(d):
+		for k,v in d.items():
+			l.append([k,v])
+		return l
+
+	for x in regtime:
+		for k in regdata:
+			if k!=x["_num_"]:
+				flag = True
+			else:
+				flag = False
+				break
+		if flag==True:
+			regdata[x["_num_"]] = 1
+		else:
+			regdata[x["_num_"]] += 1
+	del regdata[0]
+	reglist = f(regdata)
+
+	l = []
+	for x in addtime:
+		for k in adddata:
+			if k!=x["_num_"]:
+				flag = True
+			else:
+				flag = False
+				break
+		if flag==True:
+			adddata[x["_num_"]] = 1
+		else:
+			adddata[x["_num_"]] += 1
+	del adddata[0]
+	addlist = f(adddata)
+
+	return dict(regdata=reglist,adddata=addlist)
