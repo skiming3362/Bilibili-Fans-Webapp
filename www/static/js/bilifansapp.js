@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-05 06:32:20
+* @Last Modified time: 2017-04-05 23:32:19
 */
 
 class Up {
@@ -298,7 +298,7 @@ class Up {
 
 	setMidLink(){
 		var li = '<li class=""><a href="#" class="browse" style="color:#2593f5">[browse]</a></li>';
-		$('.mid').append(li);
+		$('.mid').parent().after(li);
 		$('.browse').prop('href', '/browse/'+this.mid);
 	}
 
