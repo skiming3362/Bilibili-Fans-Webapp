@@ -9,7 +9,7 @@
 </style>
 <script>
 function assemblePageTurnerParams(itemCount,pageIndex,pageCount,pageSize) {
-	
+
 	var itemCount = itemCount;
 	var pageIndex = pageIndex;
 	var pageCount = pageCount;
@@ -102,7 +102,7 @@ $(function() {
 {% block content %}
 	<p class="loading">loading...</p>
 	{% raw %}
-	<div id="vm" class="table-responsive table-hover">
+	<div id="vm" class="table-responsive table-striped">
 	  <table class="table">
     	<thead>
 			<th>name</th>
@@ -116,7 +116,7 @@ $(function() {
     	</thead>
     	<tbody>
     	
-			<tr v-for="info in infos">
+			<tr v-for="(info, index) in infos" :class=" index %2!=0 ? 'info' : '' ">
 				<td>{{info.name}}</td>
 				<td>{{info.mid}}</td>
 				<td>{{info.level}}</td>
