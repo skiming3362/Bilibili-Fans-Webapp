@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-04 09:52:08
+# @Last Modified time: 2017-04-05 06:28:46
 
 import re, time, json, logging, hashlib, base64, asyncio
 
@@ -14,11 +14,21 @@ from apis import APIError, APIValueError, APIResourceNotFoundError, APIPermissio
 from models import User_info, User_relation
 from config import configs
 
+def get_page_index(page_str):
+    p = 1
+    try:
+        p = int(page_str)
+    except ValueError as e:
+        pass
+    if p < 1:
+        p = 1
+    return p
+
 @get('/')
-async def index(request):
+def index(*, mid=None, request):
     return {
         '__template__': 'index.html',
-        # 'users': user_info
+        'mid': mid
     }
 
 @post('/api/UserInfo')
@@ -135,3 +145,31 @@ async def api_get_regtimeinfo(*, mid):
 	addlist = f(adddata)
 
 	return dict(regdata=reglist,adddata=addlist)
+
+@get('/api/FansNumInfo')
+async def api_get_fansnuminfo(*, mid, limit):
+	rs = await User_info.findAll(where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=[mid], orderBy='fans_num DESC', limit=int(limit))
+	namelist = []
+	fansnumlist = []
+	for x in rs:
+		namelist.append(x.name)
+		fansnumlist.append(x.fans_num)
+	return dict(namelist=namelist,fansnumlist=fansnumlist)
+
+@get('/browse/{mid}')
+def browse_mid(*,mid,page='1'):
+	return {
+        '__template__': 'browse.html',
+        'mid': mid,
+        'page_index': get_page_index(page)
+    }
+
+@get('/api/browse/{mid}')
+async def api_get_midinfo(*, mid, page='1'):
+	page_index = get_page_index(page)
+	num = await User_info.findNumber('count(mid)',where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)',args=[mid])
+	p = Page(num, page_index)
+	if num == 0:
+		return dict(page=p,infos=())
+	infos = await User_info.findAll(where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=[mid], orderBy='fans_num DESC', limit=(p.offset, p.limit))
+	return dict(page=p, infos=infos)

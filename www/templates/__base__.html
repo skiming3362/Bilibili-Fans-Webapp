@@ -6,15 +6,35 @@
 	<title>{% block title %}?{% endblock %} - Awesome Python Webapp</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/vue.js"></script>
     <script src="/static/js/echarts.js"></script>
     <script src="/static/js/china.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	{% block beforehead %}<!-- before head  -->{% endblock %}
 </head>
 <body>
-    <div class="row" style="background-color:#eee; border-top:1px solid #ccc;">
-        <div class="col-md-10"><p class="text-right">登录</p></div>
-    </div>
+    <nav class="navbar navbar-default" style="background-color:#eee">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">BiliFansAnalyze</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class=""><a href="javascript:;" class="mid"></a></li>
+            
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
     <div class="container">
         <div class="row">
             <!-- content -->
@@ -24,7 +44,7 @@
         </div>
     </div>
 
-    <div class="row" style="background-color:#eee; border-top:1px solid #ccc;">
+    <div class="" style="background-color:#eee; border-top:1px solid #ccc;">
         <div class="">
             <div class="">
                 <p>
@@ -33,7 +53,7 @@
                     <a target="_blank" href="#" class=""></a>
                     <a target="_blank" href="#" class=""></a>
                 </p>
-                <p class="text-center">Powered by <a href="#">BilibiliFans Python Webapp</a>. Copyright &copy; 2017. </p>
+                <p class="text-center">Powered by <a href="https://github.com/skiming3362/Bilibili-Fans-Webapp" target="_blank">BilibiliFans Python Webapp</a>. Copyright &copy; 2017. </p>
             </div>
         </div>
     </div>

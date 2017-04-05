@@ -2,11 +2,11 @@
 # @Author: skiming
 # @Date:   2017-03-30 06:38:17
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-03-30 06:38:30
+# @Last Modified time: 2017-04-05 07:54:16
 
 class Page(object):
 
-    def __init__(self, item_count, page_index=1, page_size=10):
+    def __init__(self, item_count, page_index=1, page_size=20):
         self.item_count = item_count
         self.page_size = page_size
         self.page_count = item_count // page_size + (1 if item_count % page_size > 0 else 0)
