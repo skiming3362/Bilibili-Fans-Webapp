@@ -8,7 +8,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-05 23:32:19
+* @Last Modified time: 2017-04-08 00:45:22
 */
 
 var Up = function () {
@@ -272,20 +272,36 @@ var Up = function () {
 	}, {
 		key: 'setTitle',
 		value: function setTitle() {
-			$('.mid').text('数据来自 MID ' + this.mid).prop('href', 'http://space.bilibili.com/' + this.mid);
+			// $('.mid').text('数据来自 MID '+this.mid).prop('href', 'http://space.bilibili.com/'+this.mid);
+
 		}
 	}, {
 		key: 'setMidLink',
 		value: function setMidLink() {
-			var li = '<li class=""><a href="#" class="browse" style="color:#2593f5">[browse]</a></li>';
+			var li = '\
+					<li class="dropdown">\
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">数据来自 MID ' + this.mid + ' <span class="caret"></span></a>\
+			          <ul class="dropdown-menu">\
+			            <li><a href="http://space.bilibili.com/' + this.mid + '/">UP主空间</a></li>\
+						<li><a href="/browse/' + this.mid + '" class="browse">详细数据</a></li>\
+						<li><a href="https://github.com/skiming3362/bilifans-chrome-extention">爬虫插件</a></li>\
+			          </ul>\
+			        </li>\
+				';
 			$('.mid').parent().after(li);
-			$('.browse').prop('href', '/browse/' + this.mid);
+			$('li.dropdown').mouseover(function () {
+				$(this).addClass('open');
+			}).mouseout(function () {
+				$(this).removeClass('open');
+			});
+			$('ul.dropdown-menu').width($('li.dropdown').width());
+			// $('.browse').prop('href', '/browse/'+this.mid);
 		}
 	}, {
 		key: 'start',
 		value: function start() {
 
-			this.setTitle();
+			// this.setTitle();
 			this.setMidLink();
 
 			this.initLevel();
