@@ -3,13 +3,12 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: {
-        'received-sheet': './js/received-sheet.js',
-        'my-sheet': './js/my-sheet.js',
-        'my-template': './js/my-template.js'
+        'index': './www/static/src/bilifansapp.js',
+        'browse': './www/static/src/browse.js'
     },
   output: {
-    publicPath: '/dist/',
-    path: path.resolve(__dirname, './dist'),
+    publicPath: './www/static/dist/',
+    path: path.resolve(__dirname, './www/static/dist/'),
     filename: '[name]-bundle.js'
   },
   module: {
