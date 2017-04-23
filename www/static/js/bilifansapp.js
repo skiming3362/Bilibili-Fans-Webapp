@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-08 00:45:22
+* @Last Modified time: 2017-04-11 08:04:47
 */
 
 class Up {
@@ -301,9 +301,9 @@ class Up {
 					<li class="dropdown">\
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">数据来自 MID '+this.mid+' <span class="caret"></span></a>\
 			          <ul class="dropdown-menu">\
-			            <li><a href="http://space.bilibili.com/'+this.mid+'/">UP主空间</a></li>\
-						<li><a href="/browse/'+this.mid+'" class="browse">详细数据</a></li>\
-						<li><a href="https://github.com/skiming3362/bilifans-chrome-extention">爬虫插件</a></li>\
+			            <li><a href="http://space.bilibili.com/'+this.mid+'/" target="_blank">UP主空间</a></li>\
+						<li><a href="/browse/'+this.mid+'" class="browse" target="_blank">详细数据</a></li>\
+						<li><a href="https://github.com/skiming3362/bilifans-chrome-extention" target="_blank">爬虫插件</a></li>\
 			          </ul>\
 			        </li>\
 				';
@@ -316,11 +316,19 @@ class Up {
 		// $('.browse').prop('href', '/browse/'+this.mid);
 	}
 
+	setBackToTop(){
+		$('.dropdown').clone(true).appendTo('body').removeClass('dropdown').addClass('dropup backtotop').backToTop({scrollTopScale:500,fadeTime:200,duration:400}).
+		children('a.dropdown-toggle').text('返回顶部');
+		$('.backtotop>ul>li>a').click(function(event) {
+			event.stopPropagation();
+		});
+	}
+
 	start(){
 
 		// this.setTitle();
 		this.setMidLink();
-
+		this.setBackToTop();
 		this.initLevel();
 		this.initSex();
 		this.initPlace();

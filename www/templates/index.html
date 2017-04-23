@@ -2,6 +2,30 @@
 
 {% block title %}BiliFansAnalyze{% endblock %}
 
+{% block beforehead %}
+	<script src="//cdn.bootcss.com/echarts/3.5.0/echarts.min.js"></script>
+    <script src="/static/js/china.js"></script>
+    <script src="/static/js/jquery-backToTop-1.0.js"></script>
+    <style>
+		.backtotop{
+			position: fixed;
+			bottom: 12%;
+			right: 8%;
+			list-style: none;
+			border: 1px solid #fff;
+			text-align: center;
+			cursor: pointer;
+			display: none;
+		}
+		.backtotop>a, .backtotop>a:hover{
+			text-decoration: none;
+			color: #333;
+			display: block;
+			width: 100px;
+		}
+    </style>
+{% endblock %}
+
 {% block content %}
 
 	<div id="level" style="width: 100%;height: 400px"></div>
