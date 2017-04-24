@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-11 08:04:47
+* @Last Modified time: 2017-04-24 23:40:18
 */
 
 class Up {
@@ -344,6 +344,7 @@ class Up {
 }
 	
 new Up(116568).start();
+console.log(12);
 
 
 
