@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-23 22:44:27
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-24 22:40:32
+* @Last Modified time: 2017-04-26 21:04:03
 */
 
 import Vue from 'vue'
@@ -29,4 +29,3 @@ class PageController {
 }
 const controller = new PageController(116568);
 controller.create_vue_instanse();
-console.log(2);
