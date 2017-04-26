@@ -3,13 +3,12 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: {
-        'received-sheet': './js/received-sheet.js',
-        'my-sheet': './js/my-sheet.js',
-        'my-template': './js/my-template.js'
+        'index': './www/static/js/src/bilifansapp.js',
+        'browse': './www/static/js/src/browse.js'
     },
   output: {
-    publicPath: '/dist/',
-    path: path.resolve(__dirname, './dist'),
+    publicPath: '/assets/',
+    path: path.resolve(__dirname, 'build'),
     filename: '[name]-bundle.js'
   },
   module: {
@@ -42,6 +41,14 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    inline: true,
+    hot: true,
+    proxy: {
+      "/": {
+        target: "http://localhost:9000",
+        pathRewrite: {"^/" : ""}
+      }
+    }
     // noInfo: true
   },
   devtool: '#eval-source-map'
@@ -62,4 +69,7 @@ if (process.env.NODE_ENV === 'production') {
       }
     })
   ])
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp/1000;
+  module.exports.output.filename = `[name]-bundle.js?${timestamp}`;
 }
