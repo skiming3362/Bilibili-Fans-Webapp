@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-28 23:12:04
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-04 14:09:52
+# @Last Modified time: 2017-04-26 23:18:29
 #           webapp 骨架
 import logging; logging.basicConfig(level=logging.INFO)
 
@@ -16,7 +16,7 @@ from jinja2 import Environment, FileSystemLoader
 
 import orm
 
-from coroweb import add_routes, add_static
+from coroweb import add_routes, add_static, add_assets
 
 def init_jinja2(app, **kw):
     logging.info('init jinja2...')
@@ -120,6 +120,7 @@ async def init(loop):
     init_jinja2(app)
     add_routes(app, 'handlers')
     add_static(app)
+    add_assets(app)
     srv = await loop.create_server(app.make_handler(), '127.0.0.1', 9000)
     logging.info('server started at http://127.0.0.1:9000..')
     return srv

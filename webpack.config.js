@@ -7,8 +7,8 @@ module.exports = {
         'browse': './www/static/js/src/browse.js'
     },
   output: {
-    publicPath: './www/static/js/dist/',
-    path: path.resolve(__dirname, './www/static/js/dist/'),
+    publicPath: '/assets/',
+    path: path.resolve(__dirname, 'build'),
     filename: '[name]-bundle.js'
   },
   module: {

@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 06:36:12
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-03 17:26:57
+# @Last Modified time: 2017-04-26 23:19:31
 
 import asyncio, os, inspect, logging, functools
 
@@ -145,6 +145,11 @@ def add_static(app):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
     app.router.add_static('/static/', path)
     logging.info('add static %s => %s' % ('/static/', path))
+
+def add_assets(app):
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
+    app.router.add_static('/assets/', path)
+    logging.info('add static %s => %s' % ('/assets/', path))
 
 def add_route(app, fn):
     method = getattr(fn, '__method__', None)

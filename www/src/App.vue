@@ -15,6 +15,17 @@
       <el-table-column prop="place" label="地区" ></el-table-column>
       <el-table-column prop="fans_num" label="粉丝数" ></el-table-column>
     </el-table>
+    <el-row>
+      <el-col :span="6" :offset="18">
+        <div class="block" style="margin: 20px 0;">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next, jumper"
+            :total="50">
+          </el-pagination>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -39,7 +50,10 @@ export default {
     tableRowClassName (row, index) {
       if(index % 2) return 'info-row';
       return 'n-row';
-    }
+    },
+    handleCurrentChange(val) {
+      // this.currentPage = val;
+    },
   },
   created: function(){
     this.getFansInfo(116568)
