@@ -3,12 +3,13 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: {
-        'index': './www/static/js/src/bilifansapp.js',
-        'browse': './www/static/js/src/browse.js'
+        'index': './www/src/bilifansapp.js',
+        'browse': './www/src/browse.js',
+        vendor: ['vue','element-ui']
     },
   output: {
     publicPath: '/assets/',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, './www/assets'),
     filename: '[name]-bundle.js'
   },
   module: {
@@ -41,16 +42,13 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    inline: true,
-    hot: true,
-    proxy: {
-      "/": {
-        target: "http://localhost:9000",
-        pathRewrite: {"^/" : ""}
-      }
-    }
     // noInfo: true
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
+  ],
   devtool: '#eval-source-map'
 }
 
@@ -69,7 +67,5 @@ if (process.env.NODE_ENV === 'production') {
       }
     })
   ])
-  var timestamp = Date.parse(new Date());
-  timestamp = timestamp/1000;
-  module.exports.output.filename = `[name]-bundle.js?${timestamp}`;
+  module.exports.output.filename = '[name]-bundle.[chunkhash:8].js?';
 }

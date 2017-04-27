@@ -1,6 +1,6 @@
 <template>
   <div id="vm">
-    <h1>详细数据</h1>
+    <h2>详细数据</h2>
     <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="昵称" ></el-table-column>
       <el-table-column prop="mid" label="mid" ></el-table-column>
