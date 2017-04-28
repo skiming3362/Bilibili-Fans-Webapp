@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-03 13:40:09
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-24 23:43:30
+* @Last Modified time: 2017-04-29 00:23:45
 */
 
 class Up {
@@ -36,7 +36,7 @@ class Up {
 	}
 
 	setLevel(){
-		$.get('api/LevelInfo',{mid: '116568'}).done((data)=>{
+		$.get('api/LevelInfo',{mid: this.mid}).done((data)=>{
 			this.level.hideLoading();
 			this.level.setOption({
 				xAxis: {
@@ -136,7 +136,7 @@ class Up {
 	}
 
 	setPlace(){
-		$.get('/api/PlaceInfo',{mid: '116568'}).done((data)=>{
+		$.get('/api/PlaceInfo',{mid: this.mid}).done((data)=>{
 			this.place.hideLoading();
 			this.place.setOption({
 				series: {
@@ -240,7 +240,7 @@ class Up {
 	}
 
 	setRegtime(){
-		$.get('/api/RegtimeInfo',{mid: '116568'}).done((data)=>{
+		$.get('/api/RegtimeInfo',{mid: this.mid}).done((data)=>{
 			this.regtime.hideLoading();
 			this.regtime.setOption({
 				series: [
@@ -278,7 +278,7 @@ class Up {
 
 	setFansNum(){
 
-		$.get('/api/FansNumInfo',{mid: '116568', limit: 10}).done((data)=>{
+		$.get('/api/FansNumInfo',{mid: this.mid, limit: 10}).done((data)=>{
 			this.fans_num.hideLoading();
 			this.fans_num.setOption({
 				yAxis:{
@@ -344,8 +344,6 @@ class Up {
 }
 	
 new Up(116568).start();
-console.log(123);
-
 
 
 

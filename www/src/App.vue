@@ -1,6 +1,6 @@
 <template>
   <div id="vm">
-    <h1>详细数据</h1>
+    <h2>详细数据</h2>
     <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="昵称" ></el-table-column>
       <el-table-column prop="mid" label="mid" ></el-table-column>
@@ -21,7 +21,7 @@
           <el-pagination
             @current-change="handleCurrentChange"
             layout="prev, pager, next, jumper"
-            :total="50">
+            :total="totalRow" :page-size="pageSize">
           </el-pagination>
         </div>
       </el-col>
@@ -33,7 +33,10 @@
 export default {
   data () {
     return {
-      tableData: []
+      tableData: [],
+      totalRow: 0,
+      pageSize: 0,
+      uid: null
     }
   },
   watch: {
@@ -42,9 +45,11 @@ export default {
     }
   },
   methods: {
-    getFansInfo (uid) {
+    getFansInfo(uid) {//这里需要优化，通过dp与服务器通信
       $.get(`/api/browse/${uid}`, (data)=> {
         this.tableData = data.infos;
+        this.totalRow = data.page.item_count;
+        this.pageSize = data.page.page_size;
       });
     },
     tableRowClassName (row, index) {
@@ -52,11 +57,21 @@ export default {
       return 'n-row';
     },
     handleCurrentChange(val) {
-      // this.currentPage = val;
+      this.getCurrentPage(val);
     },
+    getCurrentPage(cPage) {
+      $.get(`/api/browse/${this.uid}?page=${cPage}`, (data)=> {
+        this.tableData = data.infos;
+      });
+    },
+    getUid() {
+      let re = /\/(\d+)/;
+      this.uid = re.exec(window.location.pathname)[1];//需要优化
+    }
   },
-  created: function(){
-    this.getFansInfo(116568)
+  created: function() {
+    this.getUid()
+    this.getFansInfo(this.uid)
   }
 }
 </script>

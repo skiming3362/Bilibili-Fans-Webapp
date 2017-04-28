@@ -5,5 +5,7 @@
 	<div id="vm" class=""></div>
 {% endblock %}
 {% block endbody %}
-    <script src="/assets/browse-bundle.js"></script>
+    <script src={{'/assets/'+ manifestJs}}></script>
+    <script src={{'/assets/'+ vendorJs}}></script>
+    <script src={{'/assets/'+ browseJs}}></script>
 {% endblock %}

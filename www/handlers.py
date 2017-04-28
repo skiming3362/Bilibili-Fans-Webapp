@@ -2,9 +2,9 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-05 06:28:46
+# @Last Modified time: 2017-04-28 23:22:44
 
-import re, time, json, logging, hashlib, base64, asyncio
+import re, time, json, logging, hashlib, base64, asyncio, os
 
 from aiohttp import web
 
@@ -13,6 +13,14 @@ from apis import APIError, APIValueError, APIResourceNotFoundError, APIPermissio
 
 from models import User_info, User_relation
 from config import configs
+
+from myModule import getSpecifiedFilename
+
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
+indexJs = getSpecifiedFilename(path, r'index-bundle')[0]
+vendorJs = getSpecifiedFilename(path, r'vendor-bundle')[0]
+browseJs = getSpecifiedFilename(path, r'browse-bundle')[0]
+manifestJs = getSpecifiedFilename(path, r'manifest-bundle')[0]
 
 def get_page_index(page_str):
     p = 1
@@ -28,7 +36,10 @@ def get_page_index(page_str):
 def index(*, mid=None, request):
     return {
         '__template__': 'index.html',
-        'mid': mid
+        'mid': mid,
+        'indexJs': indexJs,
+        'vendorJs': vendorJs,
+        'manifestJs': manifestJs
     }
 
 @post('/api/UserInfo')
@@ -157,11 +168,14 @@ async def api_get_fansnuminfo(*, mid, limit):
 	return dict(namelist=namelist,fansnumlist=fansnumlist)
 
 @get('/browse/{mid}')
-def browse_mid(*,mid,page='1'):
+def browse_mid(*,mid,page='1'):	
 	return {
         '__template__': 'browse.html',
         'mid': mid,
-        'page_index': get_page_index(page)
+        'page_index': get_page_index(page),
+        'browseJs': browseJs,
+        'vendorJs': vendorJs,
+        'manifestJs': manifestJs
     }
 
 @get('/api/browse/{mid}')
