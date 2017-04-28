@@ -90,3 +90,4 @@ ENV/
 #custom
 schema.sql
 node_modules/
+assets/

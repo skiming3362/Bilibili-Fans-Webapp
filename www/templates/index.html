@@ -37,5 +37,7 @@
 {% endblock %}
 
 {% block endbody %}
-    <script src="/assets/index-bundle.js"></script>
+	<script src={{'/assets/'+ manifestJs}}></script>
+	<script src={{'/assets/'+ vendorJs}}></script>
+    <script src={{'/assets/'+ indexJs}}></script>
 {% endblock %}
