@@ -2,9 +2,9 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-05 06:28:46
+# @Last Modified time: 2017-04-27 23:39:34
 
-import re, time, json, logging, hashlib, base64, asyncio
+import re, time, json, logging, hashlib, base64, asyncio, os
 
 from aiohttp import web
 
@@ -13,6 +13,8 @@ from apis import APIError, APIValueError, APIResourceNotFoundError, APIPermissio
 
 from models import User_info, User_relation
 from config import configs
+
+from myModule import getSpecifiedFilename
 
 def get_page_index(page_str):
     p = 1
@@ -158,10 +160,13 @@ async def api_get_fansnuminfo(*, mid, limit):
 
 @get('/browse/{mid}')
 def browse_mid(*,mid,page='1'):
+	path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
+	jsName = getSpecifiedFilename(path, r'browse-bundle')[0]
 	return {
         '__template__': 'browse.html',
         'mid': mid,
-        'page_index': get_page_index(page)
+        'page_index': get_page_index(page),
+        'jsName': jsName
     }
 
 @get('/api/browse/{mid}')
