@@ -5,12 +5,13 @@ module.exports = {
     entry: {
         'index': './www/src/bilifansapp.js',
         'browse': './www/src/browse.js',
-        vendor: ['vue','element-ui']
+        vendor: ['vue','element-ui','vue-data-tables']
     },
   output: {
     publicPath: '/assets/',
     path: path.resolve(__dirname, './www/assets'),
-    filename: '[name]-bundle.js'
+    filename: '[name]-bundle.js',
+    chunkFilename: "[name].[chunkHash:8].js"
   },
   module: {
     loaders: [
@@ -46,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
+      names: ['vendor', 'manifest']
     }),
   ],
   devtool: '#eval-source-map'
@@ -68,4 +69,5 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
   module.exports.output.filename = '[name]-bundle.[chunkhash:8].js?';
+  module.exports.output.path = path.resolve(__dirname, './www/build');
 }
