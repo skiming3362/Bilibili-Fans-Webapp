@@ -1,8 +1,8 @@
 <template>
-  <div id="vm">
-    <h2>详细数据</h2>
-    <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="昵称" ></el-table-column>
+  <div id="vm" >
+    <h3>详细数据</h3>
+    <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName" @header-click="handleClick" border>
+      <el-table-column prop="name" label="昵称" sortable></el-table-column>
       <el-table-column prop="mid" label="mid" ></el-table-column>
       <el-table-column prop="level" label="等级" ></el-table-column>
       <el-table-column prop="attention_num" label="关注数" ></el-table-column>
@@ -30,27 +30,27 @@
 </template>
 
 <script>
+import DataProvider from './components/dataProvider.js'
+
 export default {
   data () {
     return {
       tableData: [],
       totalRow: 0,
       pageSize: 0,
-      uid: null
-    }
-  },
-  watch: {
-    tableData: function() {
-
+      uid: null,
+      dp: null
     }
   },
   methods: {
-    getFansInfo(uid) {//这里需要优化，通过dp与服务器通信
-      $.get(`/api/browse/${uid}`, (data)=> {
+    handleClick() {
+      console.log(111);
+    },
+    async getFansInfo(uid) {
+        let data = await this.dp.getFirstPage();
         this.tableData = data.infos;
         this.totalRow = data.page.item_count;
         this.pageSize = data.page.page_size;
-      });
     },
     tableRowClassName (row, index) {
       if(index % 2) return 'info-row';
@@ -59,19 +59,22 @@ export default {
     handleCurrentChange(val) {
       this.getCurrentPage(val);
     },
-    getCurrentPage(cPage) {
-      $.get(`/api/browse/${this.uid}?page=${cPage}`, (data)=> {
-        this.tableData = data.infos;
-      });
+    async getCurrentPage(cPage) {
+      let data = await this.dp.getCurrentPage(cPage);
+      this.tableData = data.infos;
     },
     getUid() {
       let re = /\/(\d+)/;
       this.uid = re.exec(window.location.pathname)[1];//需要优化
+    },
+    initDp() {
+      this.dp = new DataProvider(this.uid);
     }
   },
-  created: function() {
-    this.getUid()
-    this.getFansInfo(this.uid)
+  created: async function() {
+    this.getUid();
+    this.initDp();
+    await this.getFansInfo(this.uid);
   }
 }
 </script>
@@ -84,5 +87,4 @@ export default {
   .el-table .n-row {
     background: #eee;
   }
-
 </style>

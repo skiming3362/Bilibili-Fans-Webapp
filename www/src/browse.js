@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-23 22:44:27
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-28 23:59:01
+* @Last Modified time: 2017-05-01 22:04:42
 */
 
 import Vue from 'vue'
@@ -14,8 +14,7 @@ import App from './App.vue'
 
 class PageController {
 
-	constructor(uid) {
-		this.uid = uid;
+	constructor() {
 	}
 
 	create_vue_instanse() {
@@ -27,5 +26,5 @@ class PageController {
 		})
 	}
 }
-const controller = new PageController(116568);
+const controller = new PageController();
 controller.create_vue_instanse();
