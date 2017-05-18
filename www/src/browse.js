@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-04-23 22:44:27
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-05-01 22:04:42
+* @Last Modified time: 2017-05-01 23:34:02
 */
 
 import Vue from 'vue'
