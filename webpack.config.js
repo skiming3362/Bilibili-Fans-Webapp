@@ -5,13 +5,13 @@ module.exports = {
     entry: {
         'index': './www/src/bilifansapp.js',
         'browse': './www/src/browse.js',
-        vendor: ['vue','element-ui','vue-data-tables']
+        vendor: ['vue','element-ui', 'vue-data-tables', 'wangeditor']
     },
   output: {
     publicPath: '/assets/',
     path: path.resolve(__dirname, './www/assets'),
     filename: '[name]-bundle.js',
-    chunkFilename: "[name].[chunkHash:8].js"
+    chunkFilename: "[name]-bundle.[chunkHash:8].js"
   },
   module: {
     loaders: [
@@ -50,7 +50,7 @@ module.exports = {
       names: ['vendor', 'manifest']
     }),
   ],
-  devtool: '#eval-source-map'
+  devtool: 'cheap-module-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {

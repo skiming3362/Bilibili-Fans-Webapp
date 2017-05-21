@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-05-01 21:31:00
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-05-14 18:53:13
+* @Last Modified time: 2017-05-22 02:24:42
 */
 /*data provider for app.vue*/
 'use strict';
@@ -21,7 +21,7 @@ class DataProvider {
 
   getCurrentPage(page) {
     return new Promise((resolve,reject)=>{
-      $.get(`/api/browse/${this.uid}?page=${page}`, (data)=> {
+      $.get(`/api/browse/${this.uid}?page=${page}&orderBy=regtime DESC`, (data)=> {
         resolve(data);
       })
     });

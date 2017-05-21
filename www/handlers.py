@@ -2,7 +2,7 @@
 # @Author: skiming
 # @Date:   2017-03-30 16:35:20
 # @Last Modified by:   skiming
-# @Last Modified time: 2017-04-28 23:22:44
+# @Last Modified time: 2017-05-22 02:23:50
 
 import re, time, json, logging, hashlib, base64, asyncio, os
 
@@ -17,10 +17,10 @@ from config import configs
 from myModule import getSpecifiedFilename
 
 path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
-indexJs = getSpecifiedFilename(path, r'index-bundle')[0]
-vendorJs = getSpecifiedFilename(path, r'vendor-bundle')[0]
-browseJs = getSpecifiedFilename(path, r'browse-bundle')[0]
-manifestJs = getSpecifiedFilename(path, r'manifest-bundle')[0]
+indexJs = getSpecifiedFilename(path, r'^index-bundle')[0]
+vendorJs = getSpecifiedFilename(path, r'^vendor-bundle')[0]
+browseJs = getSpecifiedFilename(path, r'^browse-bundle')[0]
+manifestJs = getSpecifiedFilename(path, r'^manifest-bundle')[0]
 
 def get_page_index(page_str):
     p = 1
@@ -179,11 +179,23 @@ def browse_mid(*,mid,page='1'):
     }
 
 @get('/api/browse/{mid}')
-async def api_get_midinfo(*, mid, page='1'):
+async def api_get_midinfo(*, mid, page='1', orderBy='fans_num DESC'):
 	page_index = get_page_index(page)
 	num = await User_info.findNumber('count(mid)',where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)',args=[mid])
 	p = Page(num, page_index)
 	if num == 0:
 		return dict(page=p,infos=())
-	infos = await User_info.findAll(where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=[mid], orderBy='fans_num DESC', limit=(p.offset, p.limit))
+	infos = await User_info.findAll(where='mid in (select follower_id from User_relation where user_id=%s and relation_type=1)', args=[mid], orderBy=orderBy, limit=(p.offset, p.limit))
 	return dict(page=p, infos=infos)
+
+@post('/api/upload')
+async def api_get_file(*, request):
+	file = request.files['wangEditorFormFile']
+	if file == None:
+		result = r"error|未成功获取文件，上传失败"
+		return result
+	else:
+		filename = file.filename
+		file.save(os.path.join('/imageUploads', filename))
+		imgUrl = 'http://127.0.0.1:9000/imageUploads' + filename
+		return imgUrl

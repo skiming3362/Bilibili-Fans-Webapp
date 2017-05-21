@@ -1,5 +1,5 @@
 {
-  "name": "vue-starter",
+  "name": "bilibilifans-analyze",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --port 9001",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
@@ -8,7 +8,8 @@
   "dependencies": {
     "element-ui": "^1.0.0",
     "vue": "^2.1.6",
-    "vue-data-tables": "^1.1.1"
+    "vue-data-tables": "^1.1.1",
+    "wangeditor": "^2.1.23"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

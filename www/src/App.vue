@@ -26,11 +26,13 @@
         </div>
       </el-col>
     </el-row>
+    <textarea id="rich-editor"></textarea>
   </div>
 </template>
 
 <script>
 import DataProvider from './components/dataProvider.js'
+require('wangeditor')
 
 export default {
   data () {
@@ -44,7 +46,7 @@ export default {
   },
   methods: {
     handleClick() {
-      console.log(111);
+      
     },
     async getFansInfo(uid) {
         let data = await this.dp.getFirstPage();
@@ -86,5 +88,8 @@ export default {
   }
   .el-table .n-row {
     background: #eee;
+  }
+  #rich-editor {
+    height: 400px;
   }
 </style>
